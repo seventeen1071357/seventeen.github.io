@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>图书展销平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background-color: #f0faf4;
+        }
+        ul {
+            list-style: none;
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .header {
+            background: #e0f5e9;
+            border-bottom: 1px solid #b9e4c9;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 30px;
+        }
+
+        .nav ul {
+            display: flex;
+            gap: 26px;
+            font-size: 15px;
+        }
+        .nav a:hover {
+            color: #2d9078;
+            font-weight: bold;
+        }
+
+        .user-link {
+            display: flex;
+            gap: 15px;
+        }
+        .user-link a {
+            color: #2d9078;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            padding: 25px 30px;
+        }
+
+        .left-sidebar {
+            width: 200px;
+            margin-right: 20px;
+            background: #eafff4;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #d0f0df;
+        }
+        .left-sidebar h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #2a8067;
+        }
+        .left-sidebar li {
+            margin: 8px 0;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .right-sidebar {
+            width: 180px;
+            margin-left: 20px;
+            background: #eafff4;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #d0f0df;
+        }
+
+        .right-sidebar img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin: 0 auto;
+        }
+
+        .book-show h3, .hot-recommend h3, .new-books h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #333;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #d0f0df;
+        }
+
+        .book-list, .hot-list {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+
+        .book-item img, .hot-item img {
+            width: 140px;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 8px;
+        }
+
+        .book-item, .hot-item {
+            width: 30%;
+            border: 1px solid #d0f0df;
+            padding: 12px;
+            background: #fefffe;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .price {
+            color: #e63946;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            background: #fefffe;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        th {
+            background: #e0f5e9;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #d0f0df;
+        }
+
+        .login-panel {
+            display: none;
+            width: 320px;
+            background: #fefffe;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 99;
+        }
+        .login-panel:target {
+            display: block;
+        }
+        .close {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .close a {
+            color: #666;
+            font-size: 16px;
+        }
+        .login-panel h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2a8067;
+        }
+        .login-panel input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #d0f0df;
+            border-radius: 5px;
+        }
+        .login-panel .submit {
+            width: 100%;
+            padding: 10px;
+            background: #2d9078;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+        .login-panel .opt {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="img/logo.jpg" alt="网站Logo">
+        </div>
+        <div class="nav-bar">
+            <nav class="nav">
+                <ul>
+                    <li><a href="">首页</a ></li>
+                    <li><a href=" ">图书分类</a ></li>
+                    <li><a href="#">热销推荐</a ></li>
+                    <li><a href="#">新书上架</a ></li>
+                    <li><a href="#">联系我们</a ></li>
+                </ul>
+            </nav>
+            <div class="user-link">
+                <a href="#login">登录</a >
+                <a href="#register">注册</a >
+            </div>
+        </div>
+    </header>
+
+    <div class="login-panel" id="login">
+        <div class="close">
+            <a href="#">× 关闭</a >
+        </div>
+        <h3>用户登录</h3>
+        <input type="text" placeholder="用户名">
+        <input type="password" placeholder="密码">
+        <input type="submit" class="submit" value="登录">
+        <div class="opt">
+            <a href="#">忘记密码</a >
+            <a href="#register">立即注册</a >
+        </div>
+    </div>
+
+    <div class="login-panel" id="register">
+        <div class="close">
+            <a href="#">× 关闭</a >
+        </div>
+        <h3>用户注册</h3>
+        <input type="text" placeholder="用户名">
+        <input type="password" placeholder="密码">
+        <input type="password" placeholder="确认密码">
+        <input type="submit" class="submit" value="注册">
+        <div class="opt">
+            <span>已有账号？</span>
+            <a href="#login">去登录</a >
+        </div>
+    </div>
+
+    <div class="container">
+        <aside class="left-sidebar">
+            <h3>图书分类</h3>
+            <ul>
+                <li><a href="#">文学小说</a ></li>
+                <li><a href="#">科技计算机</a ></li>
+                <li><a href="#">经管励志</a ></li>
+                <li><a href="#">少儿读物</a ></li>
+                <li><a href="#">教育考试</a ></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <section class="book-show">
+                <h3>图书展示区</h3>
+                <div class="book-list">
+                    <div class="book-item">
+                        <img src="img/book1.jpg" alt="图书封面">
+                        <p>《Java编程思想》</p >
+                        <p class="price">¥79.00</p >
+                    </div>
+                    <div class="book-item">
+                        <img src="img/book2.jpg" alt="图书封面">
+                        <p>《百年孤独》</p >
+                        <p class="price">¥55.00</p >
+                    </div>
+                    <div class="book-item">
+                        <img src="img/book3.jpg" alt="图书封面">
+                        <p>《Web前端开发》</p >
+                        <p class="price">¥65.00</p >
+                    </div>
+                </div>
+            </section>
+
+            <section class="hot-recommend">
+                <h3>热门推荐</h3>
+                <div class="hot-list">
+                    <div class="hot-item">
+                        <img src="img/hot1.jpg" alt="热门图书">
+                        <p>《深度学习入门》</p >
+                        <p class="price">¥69.00</p >
+                    </div>
+                    <div class="hot-item">
+                        <img src="img/hot2.jpg" alt="热门图书">
+                        <p>《白夜行》</p >
+                        <p class="price">¥59.00</p >
+                    </div>
+                    <div class="hot-item">
+                        <img src="img/hot3.jpg" alt="热门图书">
+                        <p>《Python编程》</p >
+                        <p class="price">¥49.00</p >
+                    </div>
+                </div>
+            </section>
+
+            <section class="new-books">
+                <h3>新书上市</h3>
+                <table border="1">
+                    <tr>
+                        <th>书名</th>
+                        <th>作者</th>
+                        <th>价格</th>
+                    </tr>
+                    <tr>
+                        <td>《AI时代的未来》</td>
+                        <td>张三</td>
+                        <td>¥49.90</td>
+                    </tr>
+                    <tr>
+                        <td>《Web前端实战》</td>
+                        <td>李四</td>
+                        <td>¥59.90</td>
+                    </tr>
+                </table>
+            </section>
+        </main>
+
+        <aside class="right-sidebar">
+            <h3>促销活动</h3>
+            <img src="img/ad.jpg" alt="促销广告">
+            <p>满100减20，限时抢购！</p >
+        </aside>
+    </div>
+</body>
+</html>
